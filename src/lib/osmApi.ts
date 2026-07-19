@@ -117,9 +117,8 @@ export async function getLivabilityData(lat: number, lon: number) {
 
   try {
     const [overpassRes, dbRes, avgAqi] = await Promise.all([
-      fetch(OVERPASS_BASE, {
-        method: "POST",
-        body: query
+      fetch(`${OVERPASS_BASE}?data=${encodeURIComponent(query)}`, {
+        headers: { "User-Agent": "AreaVibe-MVP/1.0" }
       }),
       supabase.rpc('get_location_averages', { p_lat: lat, p_lon: lon }),
       getHistoricalAQI(lat, lon)
