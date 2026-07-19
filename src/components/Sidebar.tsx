@@ -163,106 +163,110 @@ export default function Sidebar({
 
         {/* Detail Card / Compare Card */}
         {selectedLocality && (
-          <div className="glass rounded-3xl p-5 pointer-events-auto overflow-y-auto flex-1 min-h-0 custom-scrollbar relative">
+          <div className="glass rounded-3xl pointer-events-auto flex-1 min-h-0 flex flex-col relative">
             {isLoading && (
               <div className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm z-10 flex items-center justify-center rounded-3xl">
                 <Loader2 className="w-8 h-8 text-brand animate-spin" />
               </div>
             )}
             
-            <div className="flex justify-between items-start mb-6">
-              <div>
-                <h2 className="text-2xl font-bold tracking-tight text-white mb-1 leading-tight">
-                  {isCompareMode && compareLocality ? `${selectedLocality.name} vs ${compareLocality.name}` : selectedLocality.name}
-                </h2>
-                {!isCompareMode && (
-                  <div className="flex items-center gap-2 mt-2">
-                    <div className={`px-2 py-1 rounded-md border text-sm font-bold flex items-center gap-1 ${getScoreColor(selectedLocality.aggregateScore)}`}>
-                      <Activity className="w-3 h-3" />
-                      {selectedLocality.aggregateScore.toFixed(1)}
+            {/* Scrollable content */}
+            <div className="p-5 pb-2 overflow-y-auto flex-1 min-h-0 custom-scrollbar">
+              <div className="flex justify-between items-start mb-6">
+                <div>
+                  <h2 className="text-2xl font-bold tracking-tight text-white mb-1 leading-tight">
+                    {isCompareMode && compareLocality ? `${selectedLocality.name} vs ${compareLocality.name}` : selectedLocality.name}
+                  </h2>
+                  {!isCompareMode && (
+                    <div className="flex items-center gap-2 mt-2">
+                      <div className={`px-2 py-1 rounded-md border text-sm font-bold flex items-center gap-1 ${getScoreColor(selectedLocality.aggregateScore)}`}>
+                        <Activity className="w-3 h-3" />
+                        {selectedLocality.aggregateScore.toFixed(1)}
+                      </div>
+                      <span className="text-slate-400 text-sm">Overall Livability</span>
                     </div>
-                    <span className="text-slate-400 text-sm">Overall Livability</span>
-                  </div>
-                )}
+                  )}
+                </div>
+                <button 
+                  onClick={() => {
+                    if (isCompareMode) {
+                      setIsCompareMode(false);
+                      onSelectCompareLocality(null);
+                    } else {
+                      onSelectLocality(null);
+                    }
+                  }}
+                  className="p-2 rounded-full hover:bg-white/10 transition-colors bg-white/5 text-slate-400 shrink-0 ml-2"
+                >
+                  <X className="w-5 h-5" />
+                </button>
               </div>
-              <button 
-                onClick={() => {
-                  if (isCompareMode) {
-                    setIsCompareMode(false);
-                    onSelectCompareLocality(null);
-                  } else {
-                    onSelectLocality(null);
-                  }
-                }}
-                className="p-2 rounded-full hover:bg-white/10 transition-colors bg-white/5 text-slate-400 shrink-0 ml-2"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
 
-            {!isCompareMode && (
-              <button
-                onClick={() => setIsCompareMode(true)}
-                className="w-full mb-6 py-2 px-4 bg-white/5 hover:bg-white/10 text-white text-sm font-medium rounded-xl transition-all border border-white/10 flex items-center justify-center gap-2"
-              >
-                <ArrowRightLeft className="w-4 h-4" />
-                Compare with another area
-              </button>
-            )}
+              {!isCompareMode && (
+                <button
+                  onClick={() => setIsCompareMode(true)}
+                  className="w-full mb-6 py-2 px-4 bg-white/5 hover:bg-white/10 text-white text-sm font-medium rounded-xl transition-all border border-white/10 flex items-center justify-center gap-2"
+                >
+                  <ArrowRightLeft className="w-4 h-4" />
+                  Compare with another area
+                </button>
+              )}
 
-            {isCompareMode && !compareLocality && (
-              <div className="mb-6 p-4 rounded-xl bg-brand/10 border border-brand/20 text-brand-100 text-sm flex flex-col items-center justify-center text-center">
-                <ArrowRightLeft className="w-6 h-6 mb-2 text-brand" />
-                Click anywhere on the map or search to compare.
-              </div>
-            )}
+              {isCompareMode && !compareLocality && (
+                <div className="mb-6 p-4 rounded-xl bg-brand/10 border border-brand/20 text-brand-100 text-sm flex flex-col items-center justify-center text-center">
+                  <ArrowRightLeft className="w-6 h-6 mb-2 text-brand" />
+                  Click anywhere on the map or search to compare.
+                </div>
+              )}
 
-            <div className="space-y-4 mb-6">
-              <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                Live Data Breakdown
-              </h3>
-              
-              {selectedLocality.dimensions.map((dim: ScoreDimension, idx: number) => {
-                const compareDim = compareLocality?.dimensions.find(d => d.name === dim.name);
+              <div className="space-y-4">
+                <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  Live Data Breakdown
+                </h3>
                 
-                return (
-                  <div key={idx} className="bg-white/5 border border-white/5 rounded-xl p-3">
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-2 text-slate-200 font-medium text-sm">
-                        {getDimensionIcon(dim.name)}
-                        {dim.name}
+                {selectedLocality.dimensions.map((dim: ScoreDimension, idx: number) => {
+                  const compareDim = compareLocality?.dimensions.find(d => d.name === dim.name);
+                  
+                  return (
+                    <div key={idx} className="bg-white/5 border border-white/5 rounded-xl p-3">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-2 text-slate-200 font-medium text-sm">
+                          {getDimensionIcon(dim.name)}
+                          {dim.name}
+                        </div>
+                        
+                        <div className="flex items-center gap-2">
+                          <div className={`text-xs font-bold px-2 py-1 rounded-md border ${getScoreColor(dim.score)}`}>
+                            {dim.score}/5
+                          </div>
+                          {isCompareMode && compareDim && (
+                            <div className={`text-xs font-bold px-2 py-1 rounded-md border ${getScoreColor(compareDim.score)}`}>
+                              {compareDim.score}/5
+                            </div>
+                          )}
+                        </div>
                       </div>
                       
-                      <div className="flex items-center gap-2">
-                        <div className={`text-xs font-bold px-2 py-1 rounded-md border ${getScoreColor(dim.score)}`}>
-                          {dim.score}/5
+                      {!isCompareMode && (
+                        <p className="text-xs text-slate-400 leading-relaxed">{dim.reason}</p>
+                      )}
+                      
+                      {isCompareMode && compareDim && compareLocality && (
+                        <div className="text-xs text-slate-400 space-y-2 mt-3">
+                          <p className="p-2 bg-black/20 rounded-lg"><span className="text-slate-300 font-bold block mb-1">{selectedLocality.name}</span> {dim.reason}</p>
+                          <p className="p-2 bg-black/20 rounded-lg"><span className="text-slate-300 font-bold block mb-1">{compareLocality.name}</span> {compareDim.reason}</p>
                         </div>
-                        {isCompareMode && compareDim && (
-                          <div className={`text-xs font-bold px-2 py-1 rounded-md border ${getScoreColor(compareDim.score)}`}>
-                            {compareDim.score}/5
-                          </div>
-                        )}
-                      </div>
+                      )}
                     </div>
-                    
-                    {!isCompareMode && (
-                      <p className="text-xs text-slate-400 leading-relaxed">{dim.reason}</p>
-                    )}
-                    
-                    {isCompareMode && compareDim && compareLocality && (
-                      <div className="text-xs text-slate-400 space-y-2 mt-3">
-                        <p className="p-2 bg-black/20 rounded-lg"><span className="text-slate-300 font-bold block mb-1">{selectedLocality.name}</span> {dim.reason}</p>
-                        <p className="p-2 bg-black/20 rounded-lg"><span className="text-slate-300 font-bold block mb-1">{compareLocality.name}</span> {compareDim.reason}</p>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
 
+            {/* Sticky button footer — always visible */}
             {!isCompareMode && (
-              <div className="mt-4 pb-2 shrink-0">
+              <div className="px-5 pb-5 pt-3 shrink-0 border-t border-white/5">
                 <button 
                   onClick={() => {
                     if (!user) {
