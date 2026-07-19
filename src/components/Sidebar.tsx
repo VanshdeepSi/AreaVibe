@@ -262,19 +262,21 @@ export default function Sidebar({
             </div>
 
             {!isCompareMode && (
-              <button 
-                onClick={() => {
-                  if (!user) {
-                    router.push('/profile');
-                  } else {
-                    setShowRatingModal(true);
-                  }
-                }}
-                className="w-full py-3 px-4 bg-brand hover:bg-brand-hover text-white font-medium rounded-xl transition-all shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_25px_rgba(59,130,246,0.5)] flex items-center justify-center gap-2"
-              >
-                <Activity className="w-4 h-4" />
-                {user ? "Refine with Resident Rating" : "Log in to Rate Locality"}
-              </button>
+              <div className="mt-4 pb-2 shrink-0">
+                <button 
+                  onClick={() => {
+                    if (!user) {
+                      router.push('/profile');
+                    } else {
+                      setShowRatingModal(true);
+                    }
+                  }}
+                  className="w-full py-3 px-4 bg-brand hover:bg-brand-hover text-white font-medium rounded-xl transition-all shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_25px_rgba(59,130,246,0.5)] flex items-center justify-center gap-2"
+                >
+                  <Activity className="w-4 h-4" />
+                  {user ? "Refine with Resident Rating" : "Log in to Rate Locality"}
+                </button>
+              </div>
             )}
           </div>
         )}

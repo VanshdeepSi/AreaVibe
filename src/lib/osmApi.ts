@@ -75,10 +75,10 @@ export async function getLivabilityData(lat: number, lon: number) {
     (
       way["highway"~"trunk|primary|motorway"](around:${radius},${lat},${lon});
       way["railway"~"rail|subway"](around:${radius},${lat},${lon});
-      node["amenity"~"place_of_worship"](around:${radius},${lat},${lon});
-      way["amenity"~"place_of_worship"](around:${radius},${lat},${lon});
-      way["leisure"~"park"](around:${radius},${lat},${lon});
-      way["landuse"~"industrial"](around:${radius},${lat},${lon});
+      node["amenity"="place_of_worship"](around:${radius},${lat},${lon});
+      way["amenity"="place_of_worship"](around:${radius},${lat},${lon});
+      way["leisure"="park"](around:${radius},${lat},${lon});
+      way["landuse"="industrial"](around:${radius},${lat},${lon});
     );
     out tags;
   `;
@@ -130,9 +130,12 @@ function computeScores(overpassData: any, lat: number, lon: number, crowdsourced
   });
 
   // Calculate OSM objective scores (1-5, 5 is best)
-  const osmNoise = Math.max(1, 5 - Math.min(4, Math.floor((highways + railways) / 2)));
-  const osmAqi = Math.min(5, Math.max(1, 3 + (parks > 1 ? 1 : 0) - (industrial > 0 ? 2 : 0)));
-  const osmEvent = Math.max(1, 5 - Math.min(4, Math.floor(worship / 3)));
+  // 1 highway/rail drops score by 1. 2 drops by 2.
+  const osmNoise = Math.max(1, 5 - (highways + railways));
+  const osmAqi = Math.min(5, Math.max(1, 3 + (parks > 0 ? 1 : 0) - (industrial > 0 ? 2 : 0)));
+  
+  // Every 1 place of worship drops the event score by 1
+  const osmEvent = Math.max(1, 5 - worship);
   
   const pseudoRandom = Math.abs(Math.sin(lat * lon));
   const osmWater = Math.floor(pseudoRandom * 3) + 3; // 3-5
@@ -161,7 +164,7 @@ function computeScores(overpassData: any, lat: number, lon: number, crowdsourced
 
   const aqiReasonBase = industrial > 0 
     ? "Proximity to industrial zones negatively impacts air quality." + csText
-    : parks > 1 ? "Green cover nearby improves local air circulation." + csText : "Average urban air quality." + csText;
+    : parks > 0 ? "Green cover nearby improves local air circulation." + csText : "Average urban air quality." + csText;
     
   const aqiReason = avgAqi 
     ? `${aqiReasonBase} The 6-month historical average AQI here is ${avgAqi} (European Scale).`
