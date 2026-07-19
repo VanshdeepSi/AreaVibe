@@ -9,6 +9,7 @@ const supabase = createClient(
 );
 
 const NOMINATIM_BASE = "https://nominatim.openstreetmap.org";
+const OVERPASS_BASE = "https://overpass-api.de/api/interpreter";
 
 export async function searchLocation(query: string) {
   // Nominatim fails if we append 'Delhi NCR' as it's not an official OSM entity.
