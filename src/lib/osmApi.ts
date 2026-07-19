@@ -293,16 +293,14 @@ function computeScores(overpassData: any, lat: number, lon: number, crowdsourced
   // ======== DETAILED REASONS ========
   const totalCommercial = shops.length + eateries.length + nightlife.length + marketCommercial.length;
   let noiseReason: string;
-  if (totalCommercial > 20 && roads.length > 2) {
-    noiseReason = `Very noisy: ${roads.length} roads, ${railways.length} rail lines, ${totalCommercial} commercial spots (${shops.length} shops, ${eateries.length} eateries, ${nightlife.length} bars) within 800m.` + csText;
-  } else if (totalCommercial > 5 || roads.length > 3) {
-    noiseReason = `Moderate-to-high noise: ${roads.length} roads and ${totalCommercial} commercial establishments within 800m.` + csText;
-  } else if (roads.length > 0 || railways.length > 0) {
-    noiseReason = `Some traffic noise from ${roads.length} roads and ${railways.length} rail lines nearby.` + csText;
-  } else if (totalCommercial > 0) {
-    noiseReason = `Light commercial noise from ${totalCommercial} nearby establishments.` + csText;
+  if (osmNoise <= 2.0) {
+    noiseReason = `Very high noise exposure. Found ${roads.length} roads and ${totalCommercial} commercial spots within 800m (many nearby).` + csText;
+  } else if (osmNoise <= 3.5) {
+    noiseReason = `Moderate noise exposure from ${roads.length} roads and ${totalCommercial} commercial spots within 800m.` + csText;
+  } else if (osmNoise <= 4.5) {
+    noiseReason = `Relatively quiet. ${roads.length > 0 || totalCommercial > 0 ? `Detected ${roads.length} roads and ${totalCommercial} commercial spots within 800m, but they are mostly distant.` : 'Minimal noise sources nearby.'}` + csText;
   } else {
-    noiseReason = "Quiet residential area with minimal commercial activity." + csText;
+    noiseReason = `Quiet area with very little traffic or commercial noise.` + csText;
   }
 
   let aqiReason: string;
