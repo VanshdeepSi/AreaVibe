@@ -163,7 +163,7 @@ export default function Sidebar({
 
         {/* Detail Card / Compare Card */}
         {selectedLocality && (
-          <div className="glass rounded-3xl p-5 pointer-events-auto overflow-y-auto flex-1 custom-scrollbar relative">
+          <div className="glass rounded-3xl p-5 pointer-events-auto overflow-y-auto flex-1 min-h-0 custom-scrollbar relative">
             {isLoading && (
               <div className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm z-10 flex items-center justify-center rounded-3xl">
                 <Loader2 className="w-8 h-8 text-brand animate-spin" />
