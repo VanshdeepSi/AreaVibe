@@ -116,10 +116,18 @@ export async function getLivabilityData(lat: number, lon: number) {
   ].join("\n");
 
   try {
-    const [overpassRes, dbRes, avgAqi] = await Promise.all([
-      fetch(`${OVERPASS_BASE}?data=${encodeURIComponent(query)}`, {
-        headers: { "User-Agent": "AreaVibe-MVP/1.0" }
-      }),
+    const OVERPASS_LZ4 = "https://lz4.overpass-api.de/api/interpreter";
+    const OVERPASS_MAIN = "https://overpass-api.de/api/interpreter";
+    const reqOptions = { headers: { "User-Agent": "AreaVibe-MVP/1.0" } };
+    
+    // First try LZ4, then fallback to Main
+    let overpassRes = await fetch(`${OVERPASS_LZ4}?data=${encodeURIComponent(query)}`, reqOptions);
+    if (!overpassRes.ok) {
+      console.warn("LZ4 Overpass failed, falling back to Main. Status:", overpassRes.status);
+      overpassRes = await fetch(`${OVERPASS_MAIN}?data=${encodeURIComponent(query)}`, reqOptions);
+    }
+
+    const [dbRes, avgAqi] = await Promise.all([
       supabase.rpc('get_location_averages', { p_lat: lat, p_lon: lon }),
       getHistoricalAQI(lat, lon)
     ]);
