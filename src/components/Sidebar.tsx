@@ -87,7 +87,7 @@ export default function Sidebar({
 
   return (
     <>
-      <div className="absolute top-4 left-4 z-10 w-96 flex flex-col gap-4 max-h-[calc(100vh-2rem)] pointer-events-none">
+      <div className="absolute top-4 left-4 z-10 w-96 flex flex-col gap-3 max-h-[calc(100vh-6rem)] pointer-events-none">
         
         {/* Brand Header */}
         <div className="glass rounded-2xl p-4 pointer-events-auto flex items-center justify-between">
