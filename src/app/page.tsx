@@ -14,29 +14,29 @@ export default function LandingPage() {
   return (
     <div className="h-full overflow-y-auto custom-scroll bg-slate-950 text-slate-50 selection:bg-brand selection:text-white">
       {/* Hero Section */}
-      <section className="relative px-6 pt-32 pb-24 md:pt-48 md:pb-32 flex flex-col items-center text-center">
+      <section className="relative px-4 md:px-6 pt-20 pb-16 md:pt-48 md:pb-32 flex flex-col items-center text-center">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[800px] opacity-20 bg-brand rounded-full blur-[120px]" />
         </div>
         
-        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight max-w-4xl z-10">
+        <h1 className="text-3xl sm:text-4xl md:text-7xl font-extrabold tracking-tight max-w-4xl z-10">
           The livability layer that <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand to-cyan-400">listing sites don't show you.</span>
         </h1>
         
-        <p className="mt-8 text-xl md:text-2xl text-slate-400 max-w-2xl z-10 leading-relaxed">
+        <p className="mt-5 md:mt-8 text-base md:text-2xl text-slate-400 max-w-2xl z-10 leading-relaxed px-2">
           Price and photos aren't enough. Discover real data on noise, air quality, waterlogging, and safety for every street in Delhi NCR.
         </p>
         
-        <div className="mt-12 flex gap-4 z-10">
+        <div className="mt-8 md:mt-12 flex flex-col sm:flex-row gap-3 md:gap-4 z-10 w-full sm:w-auto px-4 sm:px-0">
           <Link 
             href="/map"
-            className="px-8 py-4 bg-brand hover:bg-brand/90 text-white rounded-full font-bold text-lg transition-all flex items-center gap-2 hover:scale-105"
+            className="px-6 md:px-8 py-3 md:py-4 bg-brand hover:bg-brand/90 text-white rounded-full font-bold text-base md:text-lg transition-all flex items-center justify-center gap-2 hover:scale-105"
           >
             Explore the Map <ArrowRight className="w-5 h-5" />
           </Link>
           <Link 
             href="/methodology"
-            className="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-full font-bold text-lg transition-all flex items-center gap-2"
+            className="px-6 md:px-8 py-3 md:py-4 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-full font-bold text-base md:text-lg transition-all flex items-center justify-center gap-2"
           >
             How it Works
           </Link>
@@ -44,11 +44,11 @@ export default function LandingPage() {
       </section>
 
       {/* Features Grid */}
-      <section className="py-24 px-6 bg-slate-900/50 border-y border-white/5">
+      <section className="py-16 md:py-24 px-4 md:px-6 bg-slate-900/50 border-y border-white/5">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold">Know before you move.</h2>
-            <p className="mt-4 text-slate-400 text-lg">AreaVibe computes scores instantly using open data and crowdsourced reality.</p>
+            <h2 className="text-2xl md:text-5xl font-bold">Know before you move.</h2>
+            <p className="mt-3 md:mt-4 text-slate-400 text-base md:text-lg">AreaVibe computes scores instantly using open data and crowdsourced reality.</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

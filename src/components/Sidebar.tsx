@@ -87,32 +87,32 @@ export default function Sidebar({
 
   return (
     <>
-      <div className="absolute top-4 left-4 z-10 w-96 flex flex-col gap-3 max-h-[calc(100vh-6rem)] pointer-events-none">
+      <div className="absolute top-2 left-2 right-2 md:right-auto md:top-4 md:left-4 z-10 w-auto md:w-96 flex flex-col gap-2 md:gap-3 max-h-[calc(100vh-5rem)] md:max-h-[calc(100vh-6rem)] pointer-events-none">
         
         {/* Brand Header */}
-        <div className="glass rounded-2xl p-4 pointer-events-auto flex items-center justify-between">
+        <div className="glass rounded-xl md:rounded-2xl p-3 md:p-4 pointer-events-auto flex items-center justify-between">
             <div>
-                <h1 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+                <h1 className="text-lg md:text-xl font-bold tracking-tight text-white flex items-center gap-2">
                     <MapPin className="w-5 h-5 text-brand" />
                     AreaVibe
                 </h1>
-                <p className="text-xs text-slate-400 mt-1">Dynamic Livability Score Layer</p>
+                <p className="text-xs text-slate-400 mt-0.5 md:mt-1">Dynamic Livability Score Layer</p>
             </div>
         </div>
 
         {/* Search Bar */}
-        <div className="glass rounded-2xl p-3 pointer-events-auto flex items-center gap-3">
-          <Search className="w-5 h-5 text-slate-400" />
+        <div className="glass rounded-xl md:rounded-2xl p-2.5 md:p-3 pointer-events-auto flex items-center gap-2 md:gap-3">
+          <Search className="w-4 h-4 md:w-5 md:h-5 text-slate-400 shrink-0" />
           <input 
             type="text" 
-            placeholder={isCompareMode ? "Search any street to compare..." : "Search any street or locality..."}
+            placeholder={isCompareMode ? "Search to compare..." : "Search any street or locality..."}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="bg-transparent border-none outline-none text-slate-100 w-full placeholder-slate-500"
+            className="bg-transparent border-none outline-none text-slate-100 w-full placeholder-slate-500 text-sm md:text-base"
           />
-          {isSearching && <Loader2 className="w-4 h-4 text-brand animate-spin" />}
+          {isSearching && <Loader2 className="w-4 h-4 text-brand animate-spin shrink-0" />}
           {searchQuery && !isSearching && (
-            <button onClick={() => { setSearchQuery(""); setSearchResults([]); }} className="text-slate-400 hover:text-slate-200">
+            <button onClick={() => { setSearchQuery(""); setSearchResults([]); }} className="text-slate-400 hover:text-slate-200 shrink-0">
               <X className="w-4 h-4" />
             </button>
           )}
@@ -144,7 +144,7 @@ export default function Sidebar({
               >
                 <div>
                   <div className="text-slate-200 font-medium text-sm">{res.display_name.split(",")[0]}</div>
-                  <div className="text-slate-500 text-xs truncate max-w-[250px]">{res.display_name}</div>
+                  <div className="text-slate-500 text-xs truncate max-w-[200px] md:max-w-[250px]">{res.display_name}</div>
                 </div>
                 <ChevronRight className="w-4 h-4 text-slate-500 flex-shrink-0" />
               </button>
@@ -163,7 +163,7 @@ export default function Sidebar({
 
         {/* Detail Card / Compare Card */}
         {selectedLocality && (
-          <div className="glass rounded-3xl pointer-events-auto flex-1 min-h-0 flex flex-col relative">
+          <div className="glass rounded-2xl md:rounded-3xl pointer-events-auto flex-1 min-h-0 flex flex-col relative">
             {isLoading && (
               <div className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm z-10 flex items-center justify-center rounded-3xl">
                 <Loader2 className="w-8 h-8 text-brand animate-spin" />
@@ -171,10 +171,10 @@ export default function Sidebar({
             )}
             
             {/* Scrollable content */}
-            <div className="p-5 pb-2 overflow-y-auto flex-1 min-h-0 custom-scrollbar">
+            <div className="p-3 md:p-5 pb-2 overflow-y-auto flex-1 min-h-0 custom-scrollbar">
               <div className="flex justify-between items-start mb-6">
                 <div>
-                  <h2 className="text-2xl font-bold tracking-tight text-white mb-1 leading-tight">
+                  <h2 className="text-lg md:text-2xl font-bold tracking-tight text-white mb-1 leading-tight">
                     {isCompareMode && compareLocality ? `${selectedLocality.name} vs ${compareLocality.name}` : selectedLocality.name}
                   </h2>
                   {!isCompareMode && (
@@ -266,7 +266,7 @@ export default function Sidebar({
 
             {/* Sticky button footer — always visible */}
             {!isCompareMode && (
-              <div className="px-5 pb-5 pt-3 shrink-0 border-t border-white/5">
+              <div className="px-3 md:px-5 pb-3 md:pb-5 pt-2 md:pt-3 shrink-0 border-t border-white/5">
                 <button 
                   onClick={() => {
                     if (!user) {
@@ -275,7 +275,7 @@ export default function Sidebar({
                       setShowRatingModal(true);
                     }
                   }}
-                  className="w-full py-3 px-4 bg-brand hover:bg-brand-hover text-white font-medium rounded-xl transition-all shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_25px_rgba(59,130,246,0.5)] flex items-center justify-center gap-2"
+                  className="w-full py-2.5 md:py-3 px-4 bg-brand hover:bg-brand-hover text-white font-medium rounded-xl transition-all shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_25px_rgba(59,130,246,0.5)] flex items-center justify-center gap-2 text-sm md:text-base"
                 >
                   <Activity className="w-4 h-4" />
                   {user ? "Refine with Resident Rating" : "Log in to Rate Locality"}
