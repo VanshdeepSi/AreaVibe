@@ -71,9 +71,7 @@ export default function Map({ selectedLocality, onSelectLocality, onMapClick }: 
       <MapContainer
         center={defaultCenter}
         zoom={12}
-        minZoom={10}
-        maxBounds={maxBounds}
-        maxBoundsViscosity={1.0}
+        minZoom={3}
         scrollWheelZoom={true}
         className="w-full h-full"
         zoomControl={false}

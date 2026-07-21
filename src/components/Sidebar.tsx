@@ -87,9 +87,11 @@ export default function Sidebar({
 
   return (
     <>
-      <div className="absolute top-2 left-2 right-2 md:right-auto md:top-4 md:left-4 z-10 w-auto md:w-96 flex flex-col gap-2 md:gap-3 max-h-[calc(100vh-5rem)] md:max-h-[calc(100vh-6rem)] pointer-events-none">
+      <div className="absolute top-2 left-2 right-2 bottom-2 md:bottom-auto md:right-auto md:top-4 md:left-4 z-10 w-auto md:w-96 flex flex-col justify-between md:justify-start gap-2 md:gap-3 pointer-events-none md:max-h-[calc(100vh-6rem)]">
         
-        {/* Brand Header */}
+        {/* TOP SECTION: Header & Search */}
+        <div className="flex flex-col gap-2 md:gap-3 shrink-0">
+          {/* Brand Header */}
         <div className="glass rounded-xl md:rounded-2xl p-3 md:p-4 pointer-events-auto flex items-center justify-between">
             <div>
                 <h1 className="text-lg md:text-xl font-bold tracking-tight text-white flex items-center gap-2">
@@ -151,7 +153,10 @@ export default function Sidebar({
             ))}
           </div>
         )}
+        </div>
 
+        {/* BOTTOM SECTION: Detail Card */}
+        <div className="flex flex-col shrink min-h-0 justify-end md:justify-start">
         {/* Loading Overlay for Detail Card */}
         {isLoading && !selectedLocality && (
           <div className="glass rounded-3xl p-8 pointer-events-auto flex flex-col items-center justify-center text-center">
@@ -284,6 +289,7 @@ export default function Sidebar({
             )}
           </div>
         )}
+        </div>
       </div>
 
       {/* Rating Modal Mockup */}
